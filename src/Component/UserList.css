@@ -1,0 +1,22 @@
+.table-container {
+  margin: 20px auto; /* Center the table container */
+  width: 80%;
+  text-align: center;
+  box-shadow: 1px 1px 5px rgb(89, 85, 85);
+   /* Center the contents of the container */
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: auto; /* Center the table horizontally */
+}
+
+.table-header {
+  background-color: #3e3b3b;
+  color: #f0dddd;
+}
+
+.table-row:nth-of-type(odd) {
+  background-color: #f2f2f2;
+}

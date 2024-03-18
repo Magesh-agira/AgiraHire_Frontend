@@ -1,0 +1,31 @@
+.sidenav {
+    height: 100%; /* Full-height */
+    width: 250px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #111; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+  }
+  
+  .sidenav ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidenav ul li {
+    padding: 10px 15px;
+  }
+  
+  .sidenav ul li a {
+    text-decoration: none;
+    color: white;
+    display: block;
+  }
+  
+  .sidenav ul li a:hover {
+    background-color: #333;
+  }
+  

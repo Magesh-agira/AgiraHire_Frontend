@@ -1,0 +1,14 @@
+.opp_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust as needed */
+  }
+  
+.opp_form {
+    width: 400px; /* Adjust width as needed */
+    padding: 20px;
+    border: 1px solid #0f0f0f;
+    border-radius: 8px;
+  }
+  
