@@ -1,49 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-//import '../css/UserForm.css'; // Import CSS file
-
 
 export default function UserSignUp() {
   const [empID, setEmpID] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [empIDError, setEmpIDError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [formError, setFormError] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormError("");
-    setEmpIDError("");
-    setEmailError("");
-    setPasswordError("");
+    setError(""); // Clear previous errors
 
-    let hasError = false;
-
-    // Validate employee ID
-    if (!empID) {
-      setEmpIDError("Employee ID is required");
-      hasError = true;
+    // Validation checks
+    if (!empID || !email || !password) {
+      setError("All fields are required");
+      return;
     }
-
-    // Validate email
-    if (!email) {
-      setEmailError("Email is required");
-      hasError = true;
-    } else if (!validateEmail(email)) {
-      setEmailError("Invalid email format");
-      hasError = true;
-    }
-
-    // Validate password
-    if (!password) {
-      setPasswordError("Password is required");
-      hasError = true;
-    }
-
-    if (hasError) {
-      setFormError("Please fix the errors in the form");
+    if (!validateEmail(email)) {
+      setError("Invalid email format");
       return;
     }
 
@@ -59,6 +33,11 @@ export default function UserSignUp() {
     } catch (error) {
       console.error('Error signing up:', error);
       // Handle errors (e.g., display error messages)
+      if (error.response && error.response.data) {
+        setError(error.response.data); // Display error message from backend
+      }  else {
+        setError("An error occurred while signing up. Please try again later.");
+      }
     }
   };
 
@@ -69,40 +48,38 @@ export default function UserSignUp() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form-container">
-      <div>
-        <h5>User Signup</h5>
-      </div>
-      <div>
-        <label>Employee ID</label>
+    <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: '0 auto', padding: '20px', border: '1px solid #ccc', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+      <h2>User Signup</h2>
+      <div style={{ marginBottom: '20px' }}>
+        <label>Employee ID:</label>
         <input
           type="text"
           value={empID}
           onChange={(e) => setEmpID(e.target.value)}
+          style={{ width: '100%', padding: '10px', fontSize: '16px', border: '1px solid #ccc', borderRadius: '5px' }}
         />
-        {empIDError && <span className="error">{empIDError}</span>}
       </div>
-      <div>
-        <label>Email</label>
+      <div style={{ marginBottom: '20px' }}>
+        <label>Email:</label>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          style={{ width: '100%', padding: '10px', fontSize: '16px', border: '1px solid #ccc', borderRadius: '5px' }}
         />
-        {emailError && <span className="error">{emailError}</span>}
       </div>
-      <div>
-        <label>Password</label>
+      <div style={{ marginBottom: '20px' }}>
+        <label>Password:</label>
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          style={{ width: '100%', padding: '10px', fontSize: '16px', border: '1px solid #ccc', borderRadius: '5px' }}
         />
-        {passwordError && <span className="error">{passwordError}</span>}
       </div>
-      {formError && <div className="error">{formError}</div>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <div>
-        <button type="submit">Sign Up</button>
+        <button type="submit" style={{ width: '100%', padding: '10px', fontSize: '16px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Sign Up</button>
       </div>
     </form>
   );

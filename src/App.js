@@ -8,13 +8,14 @@ import UserList from './Component/UserList';
 import Home from './Component/Home';
 import Login from './Component/Login';
 import SideNavigation from './Component/SideNavigation';
+import Dashboard from './Component/Dashboard';
 
 
 function App() {
   return (
     <Router>
       <div className="App">
-      <SideNavigation />
+      
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path="/opportunityForm" element={<OpportunityForm />} /> {/* Use element prop */}
@@ -23,6 +24,8 @@ function App() {
           <Route path='/userslist' element={<UserList/>}/>
           <Route path='/home' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
+          <Route path='/dashboard' element={<Dashboard/>}/>
+
 
 
         </Routes>
