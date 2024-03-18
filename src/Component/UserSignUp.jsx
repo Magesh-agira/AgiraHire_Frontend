@@ -23,7 +23,7 @@ export default function UserSignUp() {
 
     try {
       const response = await axios.post('https://localhost:7199/api/User/addUser', {
-        employeeId: empID,
+        employee_Id: empID,
         email: email,
         password: password,
         isDeleted: false
