@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; 
 import Axios from 'axios';
 import "../App.css";
 
@@ -39,8 +39,10 @@ const Login = () => {
     // }
 
     try {
+      debugger;
       // If inputs are valid, attempt login 
       const response = await Axios.post('https://localhost:7199/api/Auth/login', { email, password })
+      
               .then((res)=>{
                 console.log(res.data);
           
@@ -48,7 +50,7 @@ const Login = () => {
                   alert("Login successful");
                   navigate("/dashboard  ");
                 }
-                else if (res.data.message==="Incorrect password"){
+                else{
                   console.log("incoreecttttt");
                   alert("Incorrect password");
                   
@@ -57,6 +59,8 @@ const Login = () => {
               .catch((err)=>{
                 console.log(err);
               })
+
+              console.log(response.data.message);
 
 
     } catch (error) {
