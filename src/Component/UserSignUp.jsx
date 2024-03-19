@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function UserSignUp() {
   const [empID, setEmpID] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleChangeEmpID = (e) => {
+    const value = e.target.value;
+    console.log('EmpID:', value); // Debugging statement
+    setEmpID(value);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,12 +31,14 @@ export default function UserSignUp() {
 
     try {
       const response = await axios.post('https://localhost:7199/api/User/addUser', {
-        employeeId: empID,
+        employee_Id: empID,
         email: email,
         password: password,
         isDeleted: false
       });
-      console.log('User signed up successfully:', response.data);
+      alert('User signed up successfully:', response.data);
+      navigate('/dashboard');
+
       // Optionally, redirect to another page after successful signup
     } catch (error) {
       console.error('Error signing up:', error);
@@ -55,7 +65,7 @@ export default function UserSignUp() {
         <input
           type="text"
           value={empID}
-          onChange={(e) => setEmpID(e.target.value)}
+          onChange={handleChangeEmpID}
           style={{ width: '100%', padding: '10px', fontSize: '16px', border: '1px solid #ccc', borderRadius: '5px' }}
         />
       </div>
