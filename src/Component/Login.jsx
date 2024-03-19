@@ -25,7 +25,6 @@ const Login = () => {
     } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       setEmailError('Please enter a valid email');
       return;
-
     }
    
     // Validate password
@@ -33,43 +32,32 @@ const Login = () => {
       setPasswordError('Please enter a password');
       return;
     }
-    // } else if (password.length < 8) {
-    //   setPasswordError('The password must be 8 characters or longer');
-    //   return;
-    // }
 
     try {
-      debugger;
       // If inputs are valid, attempt login 
-      const response = await Axios.post('https://localhost:7199/api/Auth/login', { email, password })
+      const response = await Axios.post('https://localhost:7199/api/Auth/login', { email, password });
       
-              .then((res)=>{
-                console.log(res.data);
-          
-                if(res.data.message === "Login successful"){
-                  alert("Login successful");   //fdaf
-                  navigate("/dashboard  ");
-                }
-                else{
-                  console.log("incoreecttttt");
-                  alert("Incorrect password");
-                  
-                }
-              })
-              .catch((err)=>{
-                console.log(err);
-              })
-
-              console.log(response.data.message);
-
-
-    } catch (error) {
-      console.error('Error occurred during login:', error);
-      if (error.response && error.response.data) {
-        setLoginError(error.response.data.message || 'Login failed. Please try again.');
+      if (response.data.message === "Login successful") {
+        // Redirect to dashboard on successful login
+        navigate("/dashboard");
       } else {
-        setLoginError('Login failed. Please try again.');
+        // Display error message if login failed
+        setLoginError(response.data.message || 'Login failed. Please try again.');
       }
+    } catch (error) {
+      // Handle network errors or other unexpected errors
+     // console.error('Error occurred during login:', error);
+     if (error.response) {
+      if (error.response.status === 401) {
+        setLoginError(error.response.data.message || 'Unauthorized. Please try again.');
+      } else if (error.response.status === 400) {
+        setLoginError(error.response.data.message || 'Bad request. Please check your inputs.');
+      } else {
+        setLoginError('An unexpected error occurred. Please try again.');
+      }
+    } else {
+      setLoginError('An unexpected error occurred. Please try again.');
+    }
     }
   };
 
