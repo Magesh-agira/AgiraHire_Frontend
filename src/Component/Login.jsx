@@ -18,32 +18,40 @@ const Login = () => {
     setPasswordError('');
     setLoginError('');
 
-    // Validate email
-    // if (!email) {
-    //   setEmailError('Please enter your email');
-    //   return;
-    // } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-    //   setEmailError('Please enter a valid email');
-    //   return;
-    // }
+    //Validate email
+    if (!email) {
+      setEmailError('Please enter your email');
+      return;
+    } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+      setEmailError('Please enter a valid email');
+      return;
 
+    }
+   
     // Validate password
-    // if (!password) {
-    //   setPasswordError('Please enter a password');
-    //   return;
+    if (!password) {
+      setPasswordError('Please enter a password');
+      return;
+    }
     // } else if (password.length < 8) {
     //   setPasswordError('The password must be 8 characters or longer');
     //   return;
     // }
 
     try {
-      // If inputs are valid, attempt login
+      // If inputs are valid, attempt login 
       const response = await Axios.post('https://localhost:7199/api/Auth/login', { email, password })
               .then((res)=>{
                 console.log(res.data);
           
-                if(res.data === "Incorrect password"){
-                  alert("Password Incorrect")
+                if(res.data.message === "Login successful"){
+                  alert("Login successful");
+                  navigate("/dashboard  ");
+                }
+                else if (res.data.message==="Incorrect password"){
+                  console.log("incoreecttttt");
+                  alert("Incorrect password");
+                  
                 }
               })
               .catch((err)=>{
