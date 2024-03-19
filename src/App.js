@@ -9,6 +9,7 @@ import Home from './Component/Home';
 import Login from './Component/Login';
 import SideNavigation from './Component/SideNavigation';
 import Dashboard from './Component/Dashboard';
+import RoleForm from './Component/Role';
 
 
 function App() {
@@ -25,6 +26,8 @@ function App() {
           <Route path='/home' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
+          <Route path='/role' element={<RoleForm/>}/>
+
 
 
 
