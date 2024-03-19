@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../App.css";
-
+ 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [loginError, setLoginError] = useState('');
   const navigate = useNavigate();
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Reset error messages
@@ -32,11 +33,11 @@ const Login = () => {
       setPasswordError('Please enter a password');
       return;
     }
-
+ 
     try {
-      // If inputs are valid, attempt login 
+      // If inputs are valid, attempt login
       const response = await Axios.post('https://localhost:7199/api/Auth/login', { email, password });
-      
+     
       if (response.data.message === "Login successful") {
         // Redirect to dashboard on successful login
         toast.success('Login Successfull');
@@ -61,7 +62,7 @@ const Login = () => {
       }
     }
   };
-
+ 
   return (
     <div className={'mainContainer'}>
        <ToastContainer />
@@ -98,5 +99,6 @@ const Login = () => {
     </div>
   );
 };
-
+ 
 export default Login;
+ 
