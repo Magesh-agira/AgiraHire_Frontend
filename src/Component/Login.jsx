@@ -47,7 +47,7 @@ const Login = () => {
                 console.log(res.data);
           
                 if(res.data.message === "Login successful"){
-                  alert("Login successful");
+                  alert("Login successful");   //fdaf
                   navigate("/dashboard  ");
                 }
                 else{
