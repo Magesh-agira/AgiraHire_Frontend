@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import SideNavigation from './SideNavigation';
 
 export default function UserSignUp() {
   const [empID, setEmpID] = useState("");
@@ -58,6 +59,8 @@ export default function UserSignUp() {
   };
 
   return (
+    <>
+      <SideNavigation/>
     <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: '0 auto', padding: '20px', border: '1px solid #ccc', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
       <h2>User Signup</h2>
       <div style={{ marginBottom: '20px' }}>
@@ -92,5 +95,6 @@ export default function UserSignUp() {
         <button type="submit" style={{ width: '100%', padding: '10px', fontSize: '16px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Sign Up</button>
       </div>
     </form>
+    </>
   );
 }

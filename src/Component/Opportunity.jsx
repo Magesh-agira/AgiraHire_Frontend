@@ -1,69 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import SideNavigation from './SideNavigation';
+import './OpportunityList.css'; // Import CSS file
 
-const statusText = {
-    0: 'Open',
-    1: 'Closed',
-    2: 'On Hold'
-  };
+function Opportunity() {
+    const [opportunities, setOpportunities] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-export default function Opportunity() {
-   
-      
-  const [opportunity, setOpportunity] = useState([]);
+    useEffect(() => {
+        axios.get('https://localhost:7199/api/Opportunities')
+            .then(response => {
+                setOpportunities(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Error fetching opportunities:', error);
+                setLoading(false);
+            });
+    }, []);
 
-  useEffect(() => {
-    async function fetchOpportunities() {
-      try {
-        const response = await axios.get('https://localhost:7199/api/Opportunities');
-        setOpportunity(response.data);
-      } catch (error) {
-        console.error('Error fetching opportunities:', error);
-      }
+    if (loading) {
+        return <div>Loading...</div>;
     }
-    fetchOpportunities();
-    
-  }, []);
 
-  return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="opportunities table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Position</TableCell>
-            <TableCell align="right">Location</TableCell>
-            <TableCell align="right">Employment Type</TableCell>
-            <TableCell align="right">Qualification</TableCell>
-            <TableCell align="right">Salary</TableCell>
-            <TableCell align="right">Date Posted</TableCell>
-            <TableCell align="right">No. of Openings</TableCell>
-            <TableCell align="right">Status</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {opportunity.map((opportunity) => (
-            <TableRow key={opportunity.opportunity_Id}>
-              <TableCell component="th" scope="row">
-                {opportunity.position}
-              </TableCell>
-              <TableCell align="right">{opportunity.location}</TableCell>
-              <TableCell align="right">{opportunity.employment_Type}</TableCell>
-              <TableCell align="right">{opportunity.qualification}</TableCell>
-              <TableCell align="right">{opportunity.salary}</TableCell>
-              <TableCell align="right">{opportunity.date_Posted}</TableCell>
-              <TableCell align="right">{opportunity.no_Of_Openings}</TableCell>
-              <TableCell align="right">{statusText[opportunity.status]}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+    return (
+      <>
+      <SideNavigation/>
+        <div className="opportunity-list-container">
+            <h1>Opportunities</h1>
+            <table className="opportunity-table">
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>Location</th>
+                        <th>Employment Type</th>
+                        <th>Qualification</th>
+                        <th>Salary</th>
+                        <th>Date Posted</th>
+                        <th>No. of Openings</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {opportunities.map(opportunity => (
+                        <tr key={opportunity.opportunity_Id}>
+                            <td>{opportunity.position}</td>
+                            <td>{opportunity.location}</td>
+                            <td>{opportunity.employment_Type}</td>
+                            <td>{opportunity.qualification}</td>
+                            <td>{opportunity.salary}</td>
+                            <td>{opportunity.date_Posted}</td>
+                            <td>{opportunity.no_Of_Openings}</td>
+                            <td>{opportunity.status}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+        </>
+    );
 }
+
+export default Opportunity;

@@ -1,44 +1,54 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import SideNavigation from './SideNavigation';
 import './UserList.css'; // Import CSS file
 
-const UserList = () => {
-  const [users, setUsers] = useState([]);
+function UserList() {
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    axios.get('https://localhost:7199/api/User/getUser')
-      .then((res) => {
-        console.log(res.data);
-        setUsers(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    useEffect(() => {
+        axios.get('https://localhost:7199/api/User/getUser')
+            .then(response => {
+                setUsers(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Error fetching users:', error);
+                setLoading(false);
+            });
+    }, []);
 
-  return (
-    <div  className="table-container">
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
-
-    <TableContainer component={Paper} className="table-container">
-      <Table sx={{ minWidth: 700 }} aria-label="customized table" className="custom-table">
-        <TableHead>
-          <TableRow>
-            <TableCell className="table-header">Employee ID</TableCell>
-            <TableCell className="table-header">Email</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {users.map((user, index) => (
-            <TableRow key={index} className="table-row">
-              <TableCell>{user.employee_Id}</TableCell>
-              <TableCell>{user.email}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    </div>
-  );
-};
+    return (
+      <>
+      <SideNavigation/>
+        <div className="user-list-container">
+            <h1>Users</h1>
+            <table className="user-table">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Employee ID</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {users.map(user => (
+                        <tr key={user.userId}>
+                            <td>{user.userId}</td>
+                            <td>{user.employee_Id}</td>
+                            <td>{user.email}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+        </>
+    );
+}
 
 export default UserList;

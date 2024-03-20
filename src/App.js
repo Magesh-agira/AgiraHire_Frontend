@@ -10,6 +10,10 @@ import Login from './Component/Login';
 import SideNavigation from './Component/SideNavigation';
 import Dashboard from './Component/Dashboard';
 import RoleForm from './Component/Role';
+import UserRoleList from './Component/UserRoleList';
+import SignUp from './Component/Signup';
+
+
 
 
 function App() {
@@ -27,6 +31,9 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/role' element={<RoleForm/>}/>
+          <Route path='/userrole' element={<UserRoleList/>}/>
+          <Route path='/ssignup' element={<SignUp/>}/>
+
 
 
 

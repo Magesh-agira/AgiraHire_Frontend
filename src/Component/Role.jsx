@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Roleform.css'; // Import CSS file
+import SideNavigation from './SideNavigation';
 
 const RoleForm = () => {
   const [formData, setFormData] = useState({
@@ -32,6 +33,8 @@ const RoleForm = () => {
   };
 
   return (
+    <>
+    <SideNavigation/>
     <div className="role-form-container">
       <h2>Role Form</h2>
       <form onSubmit={handleSubmit}>
@@ -59,6 +62,7 @@ const RoleForm = () => {
         <button type="submit">Submit</button>
       </form>
     </div>
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
+//import SideNavigation from './SideNavigation';
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../App.css";
@@ -64,6 +65,8 @@ const Login = () => {
   };
  
   return (
+    // <>
+    //   <SideNavigation/>
     <div className={'mainContainer'}>
        <ToastContainer />
       <div className={'titleContainer'}>
@@ -97,6 +100,7 @@ const Login = () => {
         </div>
       </form>
     </div>
+    // </>
   );
 };
  
